@@ -7,6 +7,7 @@ import (
 	"log"
 	"encoding/json"
 	"os"
+	"io/ioutil"
 )
 
 // Info of a struct for website data
@@ -49,4 +50,15 @@ func main() {
 	enc.SetIndent("", " ")
 	enc.Encode(allInfos)
 
+	writeJSON(allInfos)
+
+}
+
+func writeJSON(data []Info) {
+	dataFile, err := json.MarshalIndent(data, "", " ")
+	if err != nil {
+		log.Println("Could not create JSON")
+	}
+
+	ioutil.WriteFile("scrap.json", dataFile, 0666)
 }
